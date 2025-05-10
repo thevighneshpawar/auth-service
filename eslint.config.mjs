@@ -12,23 +12,23 @@ export default tseslint.config(
             'node_modules',
             'eslint.config.mjs',
             'jest.config.js',
-            'scripts'
-        ]
+            'scripts',
+        ],
     },
     {
         languageOptions: {
             parserOptions: {
                 projectService: true,
-                tsconfigRootDir: import.meta.dirname
-            }
-        }
+                tsconfigRootDir: import.meta.dirname,
+            },
+        },
     },
     {
         rules: {
             // Enforce dot notation whenever possible
             'dot-notation': 'error',
             '@typescript-eslint/no-unused-vars': 'warn',
-            'no-unused-vars': 'warn'
-        }
-    }
+            'no-unused-vars': 'warn',
+        },
+    },
 )

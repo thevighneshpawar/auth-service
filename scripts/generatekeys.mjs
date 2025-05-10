@@ -5,12 +5,12 @@ const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
     modulusLength: 2048,
     publicKeyEncoding: {
         type: 'pkcs1',
-        format: 'pem'
+        format: 'pem',
     },
     privateKeyEncoding: {
         type: 'pkcs1',
-        format: 'pem'
-    }
+        format: 'pem',
+    },
 })
 
 console.log(`Private Key: ${privateKey}`)
