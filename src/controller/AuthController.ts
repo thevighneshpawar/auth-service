@@ -155,7 +155,7 @@ export class AuthController {
 
             this.logger.info('user has been logged in ', { id: user.id })
 
-            res.status(201).json({ id: user.id })
+            res.json({ id: user.id })
         } catch (err) {
             next(err)
             //it will handle the error in global error handler
