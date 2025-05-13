@@ -7,6 +7,7 @@ import { Roles } from '../constants'
 
 export class UserService {
     constructor(private userRepository: Repository<User>) {}
+
     async create({
         firstName,
         lastName,
@@ -44,5 +45,13 @@ export class UserService {
             )
             throw error
         }
+    }
+
+    async findByEmail(email: string): Promise<User | null> {
+        const user = await this.userRepository.findOne({
+            where: { email: email },
+        })
+
+        return user
     }
 }
