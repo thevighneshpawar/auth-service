@@ -1,10 +1,9 @@
-import { NextFunction, Response } from 'express'
+import { NextFunction, Response, Request } from 'express'
 import { JwtPayload, sign } from 'jsonwebtoken'
-import { RegisterUserRequest } from '../types'
+import { AuthRequest, RegisterUserRequest } from '../types'
 import { UserService } from '../services/userService'
 import { Logger } from 'winston'
 import { validationResult } from 'express-validator/lib/validation-result'
-
 import { TokenService } from '../services/TokenService'
 import createHttpError from 'http-errors'
 import { CredentialService } from '../services/CredentialService'
@@ -161,5 +160,10 @@ export class AuthController {
             //it will handle the error in global error handler
             return
         }
+    }
+
+    async self(req: AuthRequest, res: Response) {
+        const user = await this.userService.findById(Number(req.auth.sub))
+        res.json(user)
     }
 }

@@ -9,6 +9,8 @@ import loginvalidator from '../validators/login-validator'
 import { TokenService } from '../services/TokenService'
 import { RefreshToken } from '../entity/RefreshToken'
 import { CredentialService } from '../services/CredentialService'
+import authenticate from '../middleware/authenticate'
+import { AuthRequest } from '../types'
 
 const router = express.Router()
 const userRepository = AppDataSource.getRepository(User)
@@ -37,6 +39,14 @@ router.post(
     loginvalidator,
     (req: Request, res: Response, next: NextFunction) => {
         authController.login(req, res, next).catch(next)
+    },
+)
+
+router.get(
+    '/self',
+    authenticate,
+    (req: Request, res: Response, next: NextFunction) => {
+        authController.self(req as AuthRequest, res).catch(next)
     },
 )
 

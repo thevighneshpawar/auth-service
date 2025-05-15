@@ -5,7 +5,6 @@ import request from 'supertest'
 import { AppDataSource } from '../../src/config/data-source'
 // import { truncateTables } from '../utils'
 import { Roles } from '../../src/constants'
-import { access } from 'fs'
 import { isJwt } from '../utils'
 import { RefreshToken } from '../../src/entity/RefreshToken'
 
