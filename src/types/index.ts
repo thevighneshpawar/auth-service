@@ -25,3 +25,7 @@ export type AuthCookie = {
     accessToken: string
     refreshToken: string
 }
+
+export interface irefreshTokenPayload {
+    id: string
+}
