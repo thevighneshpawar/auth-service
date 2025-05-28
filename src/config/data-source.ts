@@ -23,6 +23,6 @@ export const AppDataSource = new DataSource({
     synchronize: false,
     logging: false,
     entities: [User, RefreshToken],
-    migrations: ['src/migration/*.ts'],
+    migrations: ['src/migration/**/*.ts'],
     subscribers: [],
 })
