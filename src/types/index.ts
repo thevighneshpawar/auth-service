@@ -29,3 +29,12 @@ export type AuthCookie = {
 export interface irefreshTokenPayload {
     id: string
 }
+
+export interface Itenant {
+    name: string
+    address: string
+}
+
+export interface CreateTenantRequest extends Request {
+    body: Itenant
+}
