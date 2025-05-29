@@ -22,7 +22,7 @@ export const AppDataSource = new DataSource({
     //make it false in production always keep false
     synchronize: false,
     logging: false,
-    entities: [User, RefreshToken],
+    entities: ['src/entity/**/*.ts'],
     migrations: ['src/migration/**/*.ts'],
     subscribers: [],
 })
