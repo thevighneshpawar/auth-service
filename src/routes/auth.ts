@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { AuthController } from '../controller/AuthController'
-import { UserService } from '../services/userService'
+import { UserService } from '../services/UserService'
 import { AppDataSource } from '../config/data-source'
 import { User } from '../entity/User'
 import logger from '../config/logger'

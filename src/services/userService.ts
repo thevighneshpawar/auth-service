@@ -13,6 +13,7 @@ export class UserService {
         lastName,
         email,
         password,
+        role,
     }: userData): Promise<User> {
         const user = await this.userRepository.findOne({
             where: { email: email },
@@ -34,7 +35,7 @@ export class UserService {
                 lastName,
                 email,
                 password: hashedpassword,
-                role: Roles.CUSTOMER,
+                role,
             })
             return await this.userRepository.save(user)
             // eslint-disable-next-line @typescript-eslint/no-unused-vars

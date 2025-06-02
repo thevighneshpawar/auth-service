@@ -1,12 +1,13 @@
 import { NextFunction, Response, Request } from 'express'
 import { JwtPayload, sign } from 'jsonwebtoken'
 import { AuthRequest, RegisterUserRequest } from '../types'
-import { UserService } from '../services/userService'
+import { UserService } from '../services/UserService'
 import { Logger } from 'winston'
 import { validationResult } from 'express-validator/lib/validation-result'
 import { TokenService } from '../services/TokenService'
 import createHttpError from 'http-errors'
 import { CredentialService } from '../services/CredentialService'
+import { Roles } from '../constants'
 
 export class AuthController {
     constructor(
@@ -41,6 +42,7 @@ export class AuthController {
                 lastName,
                 email,
                 password,
+                role: Roles.CUSTOMER,
             })
 
             this.logger.info('User has been registered', { id: user.id })
