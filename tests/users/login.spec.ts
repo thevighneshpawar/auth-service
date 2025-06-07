@@ -102,4 +102,33 @@ describe('POST /auth/login', () => {
             expect(response.statusCode).toBe(400)
         })
     })
+
+    describe('Fields are missing', () => {
+        it('should return 400 status code if password is missing', async () => {
+            const userData = {
+                firstName: 'vighnesh',
+                lastName: 'Pawar',
+                email: 'vighnesh@go.com',
+                password: 'password',
+            }
+
+            const hashedPassword = await bcrypt.hash(userData.password, 10)
+
+            const userRepository = connection.getRepository(User)
+            await userRepository.save({
+                ...userData,
+                password: hashedPassword,
+                role: Roles.CUSTOMER,
+            })
+
+            // Act
+            const response = await request(app)
+                .post('/auth/login')
+                .send({ email: userData.email, password: '' })
+
+            // Assert
+
+            expect(response.statusCode).toBe(400)
+        })
+    })
 })

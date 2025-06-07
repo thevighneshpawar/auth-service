@@ -126,5 +126,26 @@ describe('GET /auth/self', () => {
         })
     })
 
-    describe('Fields are missing', () => {})
+    describe('Fields are missing', () => {
+        it('should return 400 status code if password is missing', async () => {
+            const userData = {
+                firstName: '',
+                lastName: 'Pawar',
+                email: 'vighnesh@google.com',
+                password: '',
+            }
+
+            // Act
+            const response = await request(app)
+                .post('/auth/register')
+                .send(userData)
+
+            //assert
+            const userRepository = connection.getRepository(User)
+            const users = await userRepository.find()
+
+            expect(response.statusCode).toBe(400)
+            expect(users).toHaveLength(0)
+        })
+    })
 })

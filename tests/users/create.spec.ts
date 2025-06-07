@@ -98,7 +98,35 @@ describe('GET /users', () => {
             expect(users[0].role).toBe(Roles.MANAGER)
         })
 
-        it.todo('should return 403 if non admin user tries to create user')
+        it('should return 403 if non admin user tries to create user', async () => {
+            const tenant = await createTenant(connection.getRepository(Tenant))
+            const userData = {
+                firstName: 'vighnesh',
+                lastName: 'Pawar',
+                email: 'vighnesh@google.com',
+                password: 'password',
+                role: Roles.MANAGER,
+                tenantId: tenant.id,
+            }
+
+            const customertoken = jwks.token({
+                sub: '1',
+                role: Roles.CUSTOMER,
+            })
+
+            // Add token to cookie
+            const response = await request(app)
+                .post('/users')
+                .set('Cookie', [`accessToken=${customertoken}`])
+                .send(userData)
+            // Assert
+
+            const userRepository = connection.getRepository(User)
+            const users = await userRepository.find()
+
+            expect(users).toHaveLength(0)
+            expect(response.statusCode).toBe(403)
+        })
     })
 
     describe('Fields are missing', () => {})
