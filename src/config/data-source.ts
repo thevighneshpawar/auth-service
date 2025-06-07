@@ -25,5 +25,5 @@ export const AppDataSource = new DataSource({
     entities: ['src/entity/**/*.{ts,js}'],
     migrations: ['src/migration/**/*.{ts,js}'],
     subscribers: [],
-    ssl: true,
+    ssl: Config.DB_SSL === 'true',
 })
