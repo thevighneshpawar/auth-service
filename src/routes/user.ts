@@ -15,12 +15,16 @@ import { User } from '../entity/User'
 import { CreateUserRequest, UpdateUserRequest } from '../types'
 import listUsersValidator from '../validators/listUser-validator'
 import updateUserValidator from '../validators/updateUser-validator'
+import { TenantService } from '../services/TenantService'
+import { Tenant } from '../entity/Tenant'
 
 const router = express.Router()
 
 const userRepository = AppDataSource.getRepository(User)
 const userService = new UserService(userRepository)
-const userController = new UserController(userService, logger)
+const tenantRepository = AppDataSource.getRepository(Tenant)
+const tenantService = new TenantService(tenantRepository)
+const userController = new UserController(userService, tenantService, logger)
 
 router.post(
     '/',

@@ -5,16 +5,36 @@ import { CreateUserRequest, UpdateUserRequest, UserQueryParams } from '../types'
 import { Roles } from '../constants'
 import createHttpError from 'http-errors'
 import { matchedData, validationResult } from 'express-validator'
+import { TenantService } from '../services/TenantService'
 
 export class UserController {
     constructor(
         private userService: UserService,
+        private tenantService: TenantService,
         private logger: Logger,
     ) {}
 
     async create(req: CreateUserRequest, res: Response, next: NextFunction) {
         const { firstName, lastName, email, password, role, tenantId } =
             req.body
+
+        if (
+            !firstName ||
+            !lastName ||
+            !email ||
+            !password ||
+            !role ||
+            !tenantId
+        ) {
+            return res.status(400).json({ error: 'Missing required fields' })
+        }
+
+        const tenant = await this.tenantService.findTenantById(tenantId)
+        console.log('tenant', tenant)
+
+        if (!tenant) {
+            return res.status(404).json({ error: 'Tenant not found' })
+        }
         try {
             const user = await this.userService.create({
                 firstName,
