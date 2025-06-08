@@ -30,7 +30,6 @@ export class UserController {
         }
 
         const tenant = await this.tenantService.findTenantById(tenantId)
-        console.log('tenant', tenant)
 
         if (!tenant) {
             return res.status(404).json({ error: 'Tenant not found' })
@@ -52,20 +51,17 @@ export class UserController {
     }
 
     async update(req: UpdateUserRequest, res: Response, next: NextFunction) {
-        // In our project: We are not allowing user to change the email id since it is used as username
-        // In our project: We are not allowing admin user to change others password
-
         // Validation
         const result = validationResult(req)
         if (!result.isEmpty()) {
-            return res.status(400).json({ errors: result.array() })
+            return res.status(400).json({ errors: result.array() }) // Ensure this returns 400
         }
 
         const { firstName, lastName, role, email, tenantId } = req.body
         const userId = req.params.id
 
         if (isNaN(Number(userId))) {
-            next(createHttpError(400, 'Invalid url param.'))
+            next(createHttpError(400, 'Invalid url param.')) // Ensure this returns 400
             return
         }
 
