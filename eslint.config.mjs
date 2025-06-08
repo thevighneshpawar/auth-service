@@ -16,23 +16,23 @@ export default tseslint.config(
             '*.spec.ts',
             'tests/',
             'coverage/',
-            '.github'
-        ]
+            '.github',
+        ],
     },
     {
         languageOptions: {
             parserOptions: {
                 projectService: true,
-                tsconfigRootDir: import.meta.dirname
-            }
-        }
+                tsconfigRootDir: import.meta.dirname,
+            },
+        },
     },
     {
         rules: {
             // Enforce dot notation whenever possible
             'dot-notation': 'error',
             '@typescript-eslint/no-unused-vars': 'warn',
-            'no-unused-vars': 'warn'
-        }
-    }
+            'no-unused-vars': 'warn',
+        },
+    },
 )
