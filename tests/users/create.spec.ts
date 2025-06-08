@@ -127,7 +127,100 @@ describe('GET /users', () => {
             expect(users).toHaveLength(0)
             expect(response.statusCode).toBe(403)
         })
+
+        it('should return 404 if tenantId does not exist', async () => {
+            const userData = {
+                firstName: 'John',
+                lastName: 'Doe',
+                email: 'john.doe@example.com',
+                password: 'password',
+                role: Roles.MANAGER,
+                tenantId: 9999,
+            }
+
+            const admintoken = jwks.token({
+                sub: '1',
+                role: Roles.ADMIN,
+            })
+
+            const response = await request(app)
+                .post('/users')
+                .set('Cookie', [`accessToken=${admintoken}`])
+                .send(userData)
+
+            expect(response.statusCode).toBe(404)
+        })
+
+        it('should return 400 if email already exists', async () => {
+            const tenant = await createTenant(connection.getRepository(Tenant))
+            const userData = {
+                firstName: 'Jane',
+                lastName: 'Doe',
+                email: 'jane.doe@example.com',
+                password: 'password',
+                role: Roles.MANAGER,
+                tenantId: tenant.id,
+            }
+
+            const admintoken = jwks.token({
+                sub: '1',
+                role: Roles.ADMIN,
+            })
+
+            // Create the first user
+            await request(app)
+                .post('/users')
+                .set('Cookie', [`accessToken=${admintoken}`])
+                .send(userData)
+
+            // Attempt to create another user with the same email
+            const response = await request(app)
+                .post('/users')
+                .set('Cookie', [`accessToken=${admintoken}`])
+                .send(userData)
+
+            expect(response.statusCode).toBe(400)
+        })
+
+        it('should return 401 if no token is provided', async () => {
+            const tenant = await createTenant(connection.getRepository(Tenant))
+            const userData = {
+                firstName: 'John',
+                lastName: 'Smith',
+                email: 'john.smith@example.com',
+                password: 'password',
+                role: Roles.MANAGER,
+                tenantId: tenant.id,
+            }
+
+            const response = await request(app).post('/users').send(userData)
+
+            expect(response.statusCode).toBe(401)
+        })
     })
 
-    describe('Fields are missing', () => {})
+    describe('Fields are missing', () => {
+        it('should return 400 if required fields are missing', async () => {
+            const userData = {
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: '',
+                role: '',
+                tenantId: '',
+            }
+
+            const admintoken = jwks.token({
+                sub: '1',
+                role: Roles.ADMIN,
+            })
+
+            const response = await request(app)
+                .post('/users')
+                .set('Cookie', [`accessToken=${admintoken}`])
+                .send(userData)
+
+            expect(response.statusCode).toBe(400)
+        })
+    })
 })
