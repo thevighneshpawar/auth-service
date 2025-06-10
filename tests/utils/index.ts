@@ -1,5 +1,7 @@
 import { DataSource, Repository } from 'typeorm'
 import { Tenant } from '../../src/entity/Tenant'
+import { User } from '../../src/entity/User'
+import bcrypt from 'bcrypt'
 
 export const truncateTables = async (connection: DataSource) => {
     const entities = connection.entityMetadatas
@@ -27,6 +29,34 @@ export const isJwt = (token: string | null): boolean => {
     } catch (error) {
         return false
     }
+}
+
+export const createUser = async (
+    userRepository: Repository<User>,
+    userData: {
+        firstName?: string
+        lastName?: string
+        email: string
+        password?: string
+        role: any
+        tenantId: number
+    },
+): Promise<User> => {
+    const hashedPassword = await bcrypt.hash(
+        userData.password || 'password',
+        10,
+    )
+
+    const user = userRepository.create({
+        firstName: userData.firstName || 'Test',
+        lastName: userData.lastName || 'User',
+        email: userData.email,
+        password: hashedPassword,
+        role: userData.role,
+        tenant: { id: userData.tenantId }, // Pass tenant object with id
+    })
+
+    return await userRepository.save(user)
 }
 export const createTenant = async (repository: Repository<Tenant>) => {
     const tenant = await repository.save({
