@@ -5,6 +5,8 @@ config({
     path: path.join(__dirname, `../../.env.${process.env.NODE_ENV || 'dev'}`),
 })
 
+console.log(path.join(__dirname, `../../.env.${process.env.NODE_ENV || 'dev'}`))
+
 const {
     PORT,
     NODE_ENV,

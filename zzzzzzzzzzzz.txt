@@ -3,4 +3,6 @@ docker run --rm --name mernpg-container -e POSTGRES_USER=root -e POSTGRES_PASSWO
 docker run --env-file .env.dev -p 5501:5501 vighnesh04/auth-service:build-21
 
 npx typeorm-ts-node-commonjs migration:generate src/migration/rename_tables -d src/config/data-source.ts
-npx typeorm-ts-node-commonjs migration:run -d src/config/data-source.ts
+npx typeorm-ts-node-commonjs migration:run -d src/config/data-source.
+
+docker run --env-file .env.dev -p 5501:5501 vighnesh04/auth-service:build-27  
