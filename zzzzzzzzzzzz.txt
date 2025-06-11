@@ -1,5 +1,6 @@
 docker run --rm --name mernpg-container -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -v mernpgdata:/var/lib/postgresql/data -p 5432:5432 -d postgres
 
+docker run --env-file .env.dev -p 5501:5501 vighnesh04/auth-service:build-21
 
 npx typeorm-ts-node-commonjs migration:generate src/migration/rename_tables -d src/config/data-source.ts
 npx typeorm-ts-node-commonjs migration:run -d src/config/data-source.ts

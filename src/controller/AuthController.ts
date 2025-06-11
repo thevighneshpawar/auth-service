@@ -1,5 +1,5 @@
-import { NextFunction, Response, Request } from 'express'
-import { JwtPayload, sign } from 'jsonwebtoken'
+import { NextFunction, Response } from 'express'
+import { JwtPayload } from 'jsonwebtoken'
 import { AuthRequest, RegisterUserRequest } from '../types'
 import { UserService } from '../services/UserService'
 import { Logger } from 'winston'

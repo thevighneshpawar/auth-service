@@ -1,7 +1,7 @@
 import { DataSource, Repository } from 'typeorm'
 import { Tenant } from '../../src/entity/Tenant'
 import { User } from '../../src/entity/User'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 export const truncateTables = async (connection: DataSource) => {
     const entities = connection.entityMetadatas

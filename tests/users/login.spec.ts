@@ -6,7 +6,7 @@ import { AppDataSource } from '../../src/config/data-source'
 // import { truncateTables } from '../utils'
 import { Roles } from '../../src/constants'
 import { isJwt } from '../utils'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 describe('POST /auth/login', () => {
     let connection: DataSource
