@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm'
 import { User } from '../entity/User'
 import { Config } from '.'
 import { RefreshToken } from '../entity/RefreshToken'
+import { Tenant } from '../entity/Tenant'
 
 // console.log('DB Config:', {
 //     host: Config.DB_HOST,
@@ -22,7 +23,7 @@ export const AppDataSource = new DataSource({
     //make it false in production always keep false
     synchronize: false,
     logging: false,
-    entities: ['src/entity/**/*.{ts,js}'],
+    entities: [User, RefreshToken, Tenant], //['src/entity/**/*.{ts,js}']
     migrations: ['src/migration/**/*.{ts,js}'],
     subscribers: [],
     ssl: Config.DB_SSL === 'true',
