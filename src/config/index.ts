@@ -5,7 +5,7 @@ config({
     path: path.join(__dirname, `../../.env.${process.env.NODE_ENV || 'dev'}`),
 })
 
-console.log(path.join(__dirname, `../../.env.${process.env.NODE_ENV || 'dev'}`))
+//console.log(path.join(__dirname, `../../.env.${process.env.NODE_ENV || 'dev'}`))
 
 const {
     PORT,
@@ -19,6 +19,8 @@ const {
     JWKS_URI,
     PRIVATE_KEY,
     DB_SSL,
+    ADMIN_EMAIL,
+    ADMIN_PASSWORD,
 } = process.env
 
 export const Config = {
@@ -33,4 +35,6 @@ export const Config = {
     JWKS_URI,
     PRIVATE_KEY,
     DB_SSL,
+    ADMIN_EMAIL,
+    ADMIN_PASSWORD,
 }

@@ -6,12 +6,19 @@ import { HttpError } from 'http-errors'
 import authRouter from './routes/auth'
 import tenantRouter from './routes/tenant'
 import userRouter from './routes/user'
+import cors from 'cors'
 
 const app = express()
 
 app.use(express.static('public'))
 app.use(cookieParser())
 app.use(express.json())
+app.use(
+    cors<Request>({
+        origin: 'http://localhost:5173', // Replace with your frontend URL
+        credentials: true, // Allow cookies to be sent with requests
+    }),
+)
 
 app.get('/', (req, res) => {
     res.json('Welcome to auth service')
