@@ -6,8 +6,17 @@ import { HttpError } from 'http-errors'
 import authRouter from './routes/auth'
 import tenantRouter from './routes/tenant'
 import userRouter from './routes/user'
+import cors from 'cors'
+import { Config } from './config'
 
 const app = express()
+
+app.use(
+    cors({
+        origin: [Config.FRONTEND_URL || false],
+        credentials: true, // to allow cookies to be sent with requests
+    }),
+)
 
 app.use(express.static('public'))
 app.use(cookieParser())
