@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs'
 import { User } from '../entity/User'
 import { LimitedUserData, userData, UserQueryParams } from '../types'
 import { Brackets, Repository } from 'typeorm'
-import { Roles } from '../constants'
 
 export class UserService {
     constructor(private userRepository: Repository<User>) {}
@@ -122,6 +121,7 @@ export class UserService {
             .take(validatedQuery.perPage)
             .orderBy('user.id', 'DESC')
             .getManyAndCount()
+
         return result
     }
 

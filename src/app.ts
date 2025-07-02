@@ -21,12 +21,12 @@ app.use(
 app.use(express.static('public'))
 app.use(cookieParser())
 app.use(express.json())
-app.use(
-    cors<Request>({
-        origin: 'http://localhost:5173', // Replace with your frontend URL
-        credentials: true, // Allow cookies to be sent with requests
-    }),
-)
+// app.use(
+//     cors<Request>({
+//         origin: 'http://localhost:5173', // Replace with your frontend URL
+//         credentials: true, // Allow cookies to be sent with requests
+//     }),
+// )
 
 app.get('/', (req, res) => {
     res.json('Welcome to auth service')

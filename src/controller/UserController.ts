@@ -92,6 +92,7 @@ export class UserController {
             )
 
             this.logger.info('All users have been fetched')
+            //  const sortedUsers = users.sort((a, b) => a.id - b.id)
             res.json({
                 currentPage: validatedQuery.currentPage as number,
                 perPage: validatedQuery.perPage as number,

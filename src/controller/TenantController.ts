@@ -69,6 +69,7 @@ export class TenantController {
 
             this.logger.info('All tenant have been fetched')
 
+            //const sortedTenants = tenants.sort((a, b) => a.id - b.id)
             res.json({
                 currentPage: validatedQuery.currentPage as number,
                 perPage: validatedQuery.perPage as number,
