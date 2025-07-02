@@ -54,7 +54,6 @@
         ]
     },
     "dependencies": {
-        "@types/cors": "^2.8.19",
         "@types/http-errors": "^2.0.4",
         "bcryptjs": "^3.0.2",
         "cookie-parser": "^1.4.7",
