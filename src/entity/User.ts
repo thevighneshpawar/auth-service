@@ -24,5 +24,5 @@ export class User {
     // many user to one tenants
     //multiple mangers for same tenant
     @ManyToOne(() => Tenant)
-    tenant: Tenant
+    tenant: Tenant | null
 }

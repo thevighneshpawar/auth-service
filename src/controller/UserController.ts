@@ -14,38 +14,25 @@ export class UserController {
     ) {}
 
     async create(req: CreateUserRequest, res: Response, next: NextFunction) {
-        const { firstName, lastName, email, password, role, tenantId } =
+        const result = validationResult(req)
+        if (!result.isEmpty()) {
+            return next(createHttpError(400, result.array()[0].msg as string))
+        }
+
+        const { firstName, lastName, email, password, tenantId, role } =
             req.body
-
-        if (
-            !firstName ||
-            !lastName ||
-            !email ||
-            !password ||
-            !role ||
-            !tenantId
-        ) {
-            return res.status(400).json({ error: 'Missing required fields' })
-        }
-
-        const tenant = await this.tenantService.findTenantById(tenantId)
-
-        if (!tenant) {
-            return res.status(404).json({ error: 'Tenant not found' })
-        }
         try {
             const user = await this.userService.create({
                 firstName,
                 lastName,
                 email,
                 password,
-                tenantId,
                 role,
+                tenantId,
             })
-
             res.status(201).json({ id: user.id })
-        } catch (error) {
-            next(error)
+        } catch (err) {
+            next(err)
         }
     }
 
@@ -53,7 +40,8 @@ export class UserController {
         // Validation
         const result = validationResult(req)
         if (!result.isEmpty()) {
-            return res.status(400).json({ errors: result.array() }) // Ensure this returns 400
+            return createHttpError(400, result.array()[0].msg as string) // Ensure this returns 400
+            //return res.status(400).json({ errors: result.array() }) // Ensure this returns 400
         }
 
         const { firstName, lastName, role, email, tenantId } = req.body

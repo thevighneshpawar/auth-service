@@ -8,6 +8,7 @@ import { TokenService } from '../services/TokenService'
 import createHttpError from 'http-errors'
 import { CredentialService } from '../services/CredentialService'
 import { Roles } from '../constants'
+import { log } from 'console'
 
 export class AuthController {
     constructor(
@@ -24,7 +25,7 @@ export class AuthController {
     ) {
         const result = validationResult(req)
         if (!result.isEmpty()) {
-            return res.status(400).json({ errors: result.array() })
+            return next(createHttpError(400, result.array()[0].msg as string))
         }
 
         const { firstName, lastName, email, password } = req.body
@@ -89,7 +90,7 @@ export class AuthController {
     async login(req: RegisterUserRequest, res: Response, next: NextFunction) {
         const result = validationResult(req)
         if (!result.isEmpty()) {
-            return res.status(400).json({ errors: result.array() })
+            return next(createHttpError(400, result.array()[0].msg as string))
         }
 
         const { email, password } = req.body
