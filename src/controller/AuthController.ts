@@ -8,7 +8,6 @@ import { TokenService } from '../services/TokenService'
 import createHttpError from 'http-errors'
 import { CredentialService } from '../services/CredentialService'
 import { Roles } from '../constants'
-import { log } from 'console'
 
 export class AuthController {
     constructor(
@@ -51,6 +50,10 @@ export class AuthController {
             const payload: JwtPayload = {
                 sub: String(user.id),
                 role: user.role,
+                tenant: user.tenant ? String(user.tenant.id) : '',
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
             }
             const accessToken = this.tokenService.generateAccessToken(payload)
 
@@ -66,7 +69,7 @@ export class AuthController {
             res.cookie('accessToken', accessToken, {
                 domain: 'localhost',
                 sameSite: 'strict',
-                maxAge: 1000 * 60, //1min
+                maxAge: 1000 * 60 * 60, //1hr
                 httpOnly: true,
             })
 
@@ -129,6 +132,10 @@ export class AuthController {
             const payload: JwtPayload = {
                 sub: String(user.id),
                 role: user.role,
+                tenant: user.tenant ? String(user.tenant.id) : '',
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
             }
             const accessToken = this.tokenService.generateAccessToken(payload)
 
@@ -176,6 +183,7 @@ export class AuthController {
             const payload: JwtPayload = {
                 sub: req.auth.id,
                 role: req.auth.role,
+                tenant: req.auth.tenant,
             }
 
             const accessToken = this.tokenService.generateAccessToken(payload)

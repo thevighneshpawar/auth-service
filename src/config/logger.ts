@@ -21,6 +21,7 @@ const logger = winston.createLogger({
             silent: Config.NODE_ENV === 'test',
             //silent:true then this logger not log used in testing
         }),
+
         new winston.transports.File({
             level: 'error',
             dirname: 'logs',
@@ -32,6 +33,7 @@ const logger = winston.createLogger({
             ),
             silent: Config.NODE_ENV === 'test',
         }),
+
         new winston.transports.Console({
             level: 'info',
             format: winston.format.combine(
