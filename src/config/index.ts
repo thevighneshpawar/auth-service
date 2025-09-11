@@ -23,6 +23,7 @@ const {
     ADMIN_EMAIL,
     ADMIN_PASSWORD,
     ADMIN_URL,
+    MAIN_DOMAIN,
 } = process.env
 
 export const Config = {
@@ -41,4 +42,5 @@ export const Config = {
     ADMIN_EMAIL,
     ADMIN_PASSWORD,
     ADMIN_URL,
+    MAIN_DOMAIN,
 }
