@@ -1,0 +1,30 @@
+// Import the child_process module
+const { exec } = require('child_process')
+
+// Function to run the migration command
+function runMigration () {
+    // Execute the npm run migration command
+    exec(
+        'npm run migration:run -- -d src/config/data-source.ts',
+        {
+            env: { ...process.env, NODE_ENV: 'migration' }
+        },
+        (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error executing migration: ${error.message}`)
+                return
+            }
+
+            if (stderr) {
+                console.error(`Error output: ${stderr}`)
+                return
+            }
+
+            // Log the output of the command
+            console.log(`Migration output: ${stdout}`)
+        }
+    )
+}
+
+// Run the migration function
+runMigration()
